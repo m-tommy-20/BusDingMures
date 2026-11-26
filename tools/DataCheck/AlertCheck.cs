@@ -184,6 +184,35 @@ public static class AlertCheck
         await engine3.TickAsync();
         Check("Stop passed long ago does not fire", pastNotifier.Count == 0, pastNotifier.Count.ToString());
 
+        // The feed predicting this stop as "next" is not the same as the bus
+        // being there: a vehicle 13 km away must stay silent.
+        var farVehicle = new VehiclePosition
+        {
+            VehicleId = "TESTBUS3",
+            Route = "1",
+            RouteId = "1",
+            TripId = "T1",
+            DirectionId = "0",
+            Latitude = 46.4,
+            Longitude = 24.4,
+            PositionSource = "thoreb",
+            AssignmentStatus = "gtfs-confirmed",
+            GpsTimestamp = now,
+            Schedule = new LiveSchedule { StopId = "A" },
+        };
+        var farNotifier = new FakeNotifier();
+        var engine4 = new AlertEngine(
+            new FakeGtfs(data),
+            new FakeLive(farVehicle),
+            new FakeWatches(watch),
+            new FakeHistory(),
+            new EtaService(),
+            farNotifier,
+            NullLogger<AlertEngine>.Instance);
+        await engine4.TickAsync();
+        Check("Predicted next stop does not mean the bus is at the stop",
+            farNotifier.Count == 0, farNotifier.Count.ToString());
+
         // --- Incoming-run warnings ----------------------------------------
         var terminus = new Stop { Id = "T", Name = "Sapientia", Latitude = 46.54, Longitude = 24.55 };
         var approach = new Stop { Id = "C", Name = "Hotel Business", Latitude = 46.545, Longitude = 24.555 };

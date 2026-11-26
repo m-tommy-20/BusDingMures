@@ -15,7 +15,7 @@ namespace BusPing.Services;
 public sealed class EtaService : IEtaService
 {
     private const double DwellSecondsPerStop = 20;
-    private const double AtStopRadiusMeters = 70;
+    private const double AtStopRadiusMeters = 120;
     private const double MinSpeedKmh = 12;
     private const double MaxSpeedKmh = 40;
     private const double AssumedSpeedKmh = 22;
@@ -79,9 +79,10 @@ public sealed class EtaService : IEtaService
         var scheduleMinutes = useSchedule ? ScheduleMinutes(target, now) : null;
         var (minutes, confidence) = Blend(distanceMinutes, scheduleMinutes, vehicle);
 
-        var isAtStop =
-            distance <= AtStopRadiusMeters ||
-            string.Equals(vehicle.Schedule?.StopId, target.StopId, StringComparison.Ordinal);
+        // "At the stop" must mean physically there. The feed's next-stop
+        // prediction is not enough: a bus 10 minutes away can already have this
+        // stop as its next call, which used to produce premature alerts.
+        var isAtStop = distance <= AtStopRadiusMeters;
 
         if (isAtStop)
         {
