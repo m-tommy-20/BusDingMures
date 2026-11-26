@@ -57,6 +57,13 @@ Debug builds embed the assemblies (`EmbedAssembliesIntoApk`), so the produced
 APK can be copied to the phone and installed on its own. Without that, a
 sideloaded debug APK aborts with "No assemblies found".
 
+To build a versioned APK (and optionally push it to a connected phone):
+
+```powershell
+pwsh tools\publish-apk.ps1 -Version v6 -Push
+# -> artifacts\BusPing-v6.apk -> /sdcard/Download/BusPing-v6.apk
+```
+
 Android 8+ (API 26). Grant notification permission when starting the watcher;
 Android also shows a persistent "BusPing is watching" notification while the
 foreground service runs — that is required by the platform.
