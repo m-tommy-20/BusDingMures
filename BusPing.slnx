@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/tools/">
+    <Project Path="tools/DataCheck/DataCheck.csproj" />
+  </Folder>
+  <Project Path="BusPing/BusPing.csproj" />
+</Solution>

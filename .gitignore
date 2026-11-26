@@ -1,0 +1,23 @@
+# Build output
+bin/
+obj/
+*.user
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# IDE
+.vs/
+.idea/
+*.suo
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Local data / secrets
+appsettings.local.json
+*.local.json
+.env

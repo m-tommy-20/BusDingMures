@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BusPing.Views.AlertsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Alerts">
+
+    <Grid Padding="16">
+        <CollectionView ItemsSource="{Binding Alerts}">
+            <CollectionView.Header>
+                <VerticalStackLayout Spacing="10" Padding="0,0,0,10">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Border Grid.Column="0"
+                                Padding="14"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 14"
+                                Stroke="{AppThemeBinding Light=#E3E3EA, Dark=#33333C}">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="{Binding TotalCount}" FontSize="24" FontAttributes="Bold" />
+                                <Label Text="alerts fired" FontSize="12" Opacity="0.7" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1"
+                                Padding="14"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 14"
+                                Stroke="{AppThemeBinding Light=#E3E3EA, Dark=#33333C}">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="{Binding AverageEtaText}" FontSize="24" FontAttributes="Bold" />
+                                <Label Text="average ETA at alert" FontSize="12" Opacity="0.7" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <Label Text="Last 14 days" FontSize="14" FontAttributes="Bold" Margin="0,6,0,0" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding DailySummary}" Spacing="2">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding .}" FontSize="12" Opacity="0.75" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <Button Text="Clear history"
+                            Command="{Binding ClearCommand}"
+                            HorizontalOptions="Start"
+                            FontSize="12"
+                            Padding="10,6" />
+
+                    <Label Text="{Binding StatusMessage}"
+                           IsVisible="{Binding HasError}"
+                           TextColor="#D9480F"
+                           FontSize="12" />
+                </VerticalStackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="4,16" Spacing="4">
+                    <Label Text="No alerts yet." FontSize="16" FontAttributes="Bold" />
+                    <Label Text="When a watch fires, the event appears here with the ETA it was based on."
+                           FontSize="14"
+                           Opacity="0.7" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="4,10" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="2">
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Text="{Binding Title}"
+                               FontSize="15"
+                               FontAttributes="Bold" />
+                        <Label Grid.Row="0" Grid.Column="1"
+                               Text="{Binding TimeText}"
+                               FontSize="12"
+                               Opacity="0.7" />
+                        <Label Grid.Row="1" Grid.ColumnSpan="2"
+                               Text="{Binding Subtitle}"
+                               FontSize="13"
+                               Opacity="0.8" />
+                        <Label Grid.Row="2" Grid.ColumnSpan="2"
+                               Text="{Binding EtaText}"
+                               FontSize="12"
+                               Opacity="0.6" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BusPing.Views.WatchesPage"
+    x:Name="Root"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Watches">
+
+    <Grid Padding="16" RowDefinitions="Auto,*" RowSpacing="10">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <Label Grid.Column="0"
+                   Text="Your watch rules"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center" />
+            <Button Grid.Column="1"
+                    Text="Add"
+                    Command="{Binding AddCommand}" />
+        </Grid>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Watches}">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="4,24" Spacing="6">
+                    <Label Text="No watches yet." FontSize="16" FontAttributes="Bold" />
+                    <Label Text="Create a watch to be notified before your bus reaches your stop."
+                           FontSize="14"
+                           Opacity="0.7" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,0,0,10"
+                            Padding="14"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="{AppThemeBinding Light=#E3E3EA, Dark=#33333C}">
+                        <VerticalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <Label Grid.Column="0"
+                                       Text="{Binding Name}"
+                                       FontSize="16"
+                                       FontAttributes="Bold" />
+                                <Label Grid.Column="1"
+                                       Text="{Binding Enabled, StringFormat='Enabled: {0}'}"
+                                       FontSize="11"
+                                       Opacity="0.6"
+                                       VerticalOptions="Center" />
+                            </Grid>
+
+                            <Label Text="{Binding RouteLine}" FontSize="13" />
+                            <Label Text="{Binding BoardingLine}" FontSize="13" />
+                            <Label Text="{Binding AlertLine}" FontSize="13" />
+                            <Label Text="{Binding WindowText}" FontSize="12" Opacity="0.7" />
+
+                            <HorizontalStackLayout Spacing="8" Margin="0,4,0,0">
+                                <Button Text="Edit"
+                                        FontSize="12"
+                                        Padding="10,6"
+                                        Command="{Binding Source={x:Reference Root}, Path=BindingContext.EditCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Text="Enable / disable"
+                                        FontSize="12"
+                                        Padding="10,6"
+                                        Command="{Binding Source={x:Reference Root}, Path=BindingContext.ToggleCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Text="Delete"
+                                        FontSize="12"
+                                        Padding="10,6"
+                                        Command="{Binding Source={x:Reference Root}, Path=BindingContext.DeleteCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

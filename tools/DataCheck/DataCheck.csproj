@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>DataCheck</RootNamespace>
+	</PropertyGroup>
+
+	<!--
+		The app targets net10.0-android, so its pure data code is linked here
+		instead of referenced. This keeps the parser and ETA logic verifiable
+		from the command line, without a device or emulator.
+	-->
+	<ItemGroup>
+		<Compile Include="..\..\BusPing\Models\GtfsModels.cs" Link="Linked\GtfsModels.cs" />
+		<Compile Include="..\..\BusPing\Models\LiveModels.cs" Link="Linked\LiveModels.cs" />
+		<Compile Include="..\..\BusPing\Models\WatchRule.cs" Link="Linked\WatchRule.cs" />
+		<Compile Include="..\..\BusPing\Models\AlertEvent.cs" Link="Linked\AlertEvent.cs" />
+		<Compile Include="..\..\BusPing\Models\AppSettings.cs" Link="Linked\AppSettings.cs" />
+		<Compile Include="..\..\BusPing\Services\Csv.cs" Link="Linked\Csv.cs" />
+		<Compile Include="..\..\BusPing\Services\Geo.cs" Link="Linked\Geo.cs" />
+		<Compile Include="..\..\BusPing\Services\GtfsData.cs" Link="Linked\GtfsData.cs" />
+		<Compile Include="..\..\BusPing\Services\GtfsParser.cs" Link="Linked\GtfsParser.cs" />
+		<Compile Include="..\..\BusPing\Services\LiveFeedParser.cs" Link="Linked\LiveFeedParser.cs" />
+		<Compile Include="..\..\BusPing\Services\RouteMatcher.cs" Link="Linked\RouteMatcher.cs" />
+		<Compile Include="..\..\BusPing\Services\ShapeMatching.cs" Link="Linked\ShapeMatching.cs" />
+		<Compile Include="..\..\BusPing\Services\TripMatcher.cs" Link="Linked\TripMatcher.cs" />
+		<Compile Include="..\..\BusPing\Services\EtaService.cs" Link="Linked\EtaService.cs" />
+		<Compile Include="..\..\BusPing\Services\AlertEngine.cs" Link="Linked\AlertEngine.cs" />
+		<Compile Include="..\..\BusPing\Services\Interfaces\IEtaService.cs" Link="Linked\IEtaService.cs" />
+		<Compile Include="..\..\BusPing\Services\Interfaces\IGtfsService.cs" Link="Linked\IGtfsService.cs" />
+		<Compile Include="..\..\BusPing\Services\Interfaces\ILiveVehicleService.cs" Link="Linked\ILiveVehicleService.cs" />
+		<Compile Include="..\..\BusPing\Services\Interfaces\IRepositories.cs" Link="Linked\IRepositories.cs" />
+		<Compile Include="..\..\BusPing\Services\Interfaces\IAlertEngine.cs" Link="Linked\IAlertEngine.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+	</ItemGroup>
+
+</Project>
