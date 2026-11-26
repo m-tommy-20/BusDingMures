@@ -618,7 +618,14 @@ Working and building (`net10.0-android`):
 
 Verified on a physical Android 14 device (POCO/Redmi): dashboard loads 35 lines
 and 100+ live vehicles, the `dataSync` foreground service runs with its ongoing
-notification and ticks every 10 s, and `watches.json` survives restarts.
+notification and ticks every 5 s, and `watches.json` survives restarts.
+
+End-to-end test (line 26, boarding Sapientia, incoming warnings):
+MS318 arrived unverified, was matched to direction 1 geometrically, and
+produced two alerts — Shopping City at 17:23:07 (“2 min to Sapientia”) and
+Hotel Business at 17:24:54 (“1 min to Sapientia”). Both notifications were
+posted on the high-importance `bus_alerts` channel with the correct title and
+body; the second alert confirms the cooldown is per stop, not per watch.
 
 Next, in priority order:
 
